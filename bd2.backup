@@ -1,0 +1,2091 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.9
+-- Dumped by pg_dump version 9.3.9
+-- Started on 2015-11-11 18:25:22
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 210 (class 3079 OID 11750)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2217 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 170 (class 1259 OID 148568)
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_group (
+    id integer NOT NULL,
+    name character varying(80) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO postgres;
+
+--
+-- TOC entry 171 (class 1259 OID 148571)
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2218 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_group_id_seq OWNED BY auth_group.id;
+
+
+--
+-- TOC entry 172 (class 1259 OID 148573)
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 148576)
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2219 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_group_permissions_id_seq OWNED BY auth_group_permissions.id;
+
+
+--
+-- TOC entry 174 (class 1259 OID 148578)
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_permission (
+    id integer NOT NULL,
+    name character varying(50) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 148581)
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2220 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
+
+
+--
+-- TOC entry 176 (class 1259 OID 148583)
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone NOT NULL,
+    is_superuser boolean NOT NULL,
+    username character varying(30) NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    email character varying(75) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.auth_user OWNER TO postgres;
+
+--
+-- TOC entry 177 (class 1259 OID 148586)
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_groups OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 148589)
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_groups_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2221 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_user_groups_id_seq OWNED BY auth_user_groups.id;
+
+
+--
+-- TOC entry 179 (class 1259 OID 148591)
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2222 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_user_id_seq OWNED BY auth_user.id;
+
+
+--
+-- TOC entry 180 (class 1259 OID 148593)
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auth_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_user_permissions OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 148596)
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2223 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auth_user_user_permissions_id_seq OWNED BY auth_user_user_permissions.id;
+
+
+--
+-- TOC entry 182 (class 1259 OID 148598)
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 148605)
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2224 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE django_admin_log_id_seq OWNED BY django_admin_log.id;
+
+
+--
+-- TOC entry 184 (class 1259 OID 148607)
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE django_content_type (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO postgres;
+
+--
+-- TOC entry 185 (class 1259 OID 148610)
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2225 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE django_content_type_id_seq OWNED BY django_content_type.id;
+
+
+--
+-- TOC entry 186 (class 1259 OID 148612)
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 148618)
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2226 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE django_migrations_id_seq OWNED BY django_migrations.id;
+
+
+--
+-- TOC entry 188 (class 1259 OID 148620)
+-- Name: django_session; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 148626)
+-- Name: django_site; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE django_site (
+    id integer NOT NULL,
+    domain character varying(100) NOT NULL,
+    name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.django_site OWNER TO postgres;
+
+--
+-- TOC entry 190 (class 1259 OID 148629)
+-- Name: django_site_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE django_site_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_site_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2227 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: django_site_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE django_site_id_seq OWNED BY django_site.id;
+
+
+--
+-- TOC entry 191 (class 1259 OID 148631)
+-- Name: manager_categoria; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE manager_categoria (
+    id_categoria integer NOT NULL,
+    nombre character varying(50) NOT NULL,
+    tag character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.manager_categoria OWNER TO postgres;
+
+--
+-- TOC entry 192 (class 1259 OID 148634)
+-- Name: manager_categoria_id_categoria_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE manager_categoria_id_categoria_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.manager_categoria_id_categoria_seq OWNER TO postgres;
+
+--
+-- TOC entry 2228 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: manager_categoria_id_categoria_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE manager_categoria_id_categoria_seq OWNED BY manager_categoria.id_categoria;
+
+
+--
+-- TOC entry 193 (class 1259 OID 148636)
+-- Name: manager_entrada; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE manager_entrada (
+    id_entrada integer NOT NULL,
+    titulo character varying(150) NOT NULL,
+    imagen_libro character varying(100) NOT NULL,
+    resumen text NOT NULL,
+    fecha_publicacion timestamp with time zone NOT NULL,
+    libro character varying(100),
+    autor_id integer NOT NULL,
+    categoria_id integer NOT NULL,
+    tag character varying(50) NOT NULL,
+    librourl character varying(200)
+);
+
+
+ALTER TABLE public.manager_entrada OWNER TO postgres;
+
+--
+-- TOC entry 194 (class 1259 OID 148642)
+-- Name: manager_entrada_id_entrada_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE manager_entrada_id_entrada_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.manager_entrada_id_entrada_seq OWNER TO postgres;
+
+--
+-- TOC entry 2229 (class 0 OID 0)
+-- Dependencies: 194
+-- Name: manager_entrada_id_entrada_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE manager_entrada_id_entrada_seq OWNED BY manager_entrada.id_entrada;
+
+
+--
+-- TOC entry 195 (class 1259 OID 148644)
+-- Name: manager_facebookstatus; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE manager_facebookstatus (
+    id integer NOT NULL,
+    status character varying(255) NOT NULL,
+    publish_timestamp timestamp with time zone,
+    message text NOT NULL,
+    link character varying(200),
+    author_id integer NOT NULL
+);
+
+
+ALTER TABLE public.manager_facebookstatus OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 148650)
+-- Name: manager_facebookstatus_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE manager_facebookstatus_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.manager_facebookstatus_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2230 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: manager_facebookstatus_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE manager_facebookstatus_id_seq OWNED BY manager_facebookstatus.id;
+
+
+--
+-- TOC entry 197 (class 1259 OID 148652)
+-- Name: manager_noticia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE manager_noticia (
+    id_noticia integer NOT NULL,
+    titulo character varying(150) NOT NULL,
+    imagen_noticia character varying(100) NOT NULL,
+    contenido text NOT NULL,
+    fecha_publicacion timestamp with time zone NOT NULL,
+    autor_id integer NOT NULL,
+    tag character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.manager_noticia OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 148658)
+-- Name: manager_noticia_id_noticia_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE manager_noticia_id_noticia_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.manager_noticia_id_noticia_seq OWNER TO postgres;
+
+--
+-- TOC entry 2231 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: manager_noticia_id_noticia_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE manager_noticia_id_noticia_seq OWNED BY manager_noticia.id_noticia;
+
+
+--
+-- TOC entry 199 (class 1259 OID 148660)
+-- Name: manager_userprofile; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE manager_userprofile (
+    id integer NOT NULL,
+    gender character varying(20),
+    city character varying(250),
+    dob date,
+    locale character varying(10),
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.manager_userprofile OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 148663)
+-- Name: manager_userprofile_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE manager_userprofile_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.manager_userprofile_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2232 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: manager_userprofile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE manager_userprofile_id_seq OWNED BY manager_userprofile.id;
+
+
+--
+-- TOC entry 201 (class 1259 OID 148665)
+-- Name: manager_usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE manager_usuario (
+    user_ptr_id integer NOT NULL,
+    rol character varying(50),
+    imagenperfil character varying(100),
+    linkperfil character varying(200)
+);
+
+
+ALTER TABLE public.manager_usuario OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 148668)
+-- Name: social_auth_association; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE social_auth_association (
+    id integer NOT NULL,
+    server_url character varying(255) NOT NULL,
+    handle character varying(255) NOT NULL,
+    secret character varying(255) NOT NULL,
+    issued integer NOT NULL,
+    lifetime integer NOT NULL,
+    assoc_type character varying(64) NOT NULL
+);
+
+
+ALTER TABLE public.social_auth_association OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 148674)
+-- Name: social_auth_association_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE social_auth_association_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.social_auth_association_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2233 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: social_auth_association_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE social_auth_association_id_seq OWNED BY social_auth_association.id;
+
+
+--
+-- TOC entry 204 (class 1259 OID 148676)
+-- Name: social_auth_code; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE social_auth_code (
+    id integer NOT NULL,
+    email character varying(75) NOT NULL,
+    code character varying(32) NOT NULL,
+    verified boolean NOT NULL
+);
+
+
+ALTER TABLE public.social_auth_code OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 148679)
+-- Name: social_auth_code_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE social_auth_code_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.social_auth_code_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2234 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: social_auth_code_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE social_auth_code_id_seq OWNED BY social_auth_code.id;
+
+
+--
+-- TOC entry 206 (class 1259 OID 148681)
+-- Name: social_auth_nonce; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE social_auth_nonce (
+    id integer NOT NULL,
+    server_url character varying(255) NOT NULL,
+    "timestamp" integer NOT NULL,
+    salt character varying(65) NOT NULL
+);
+
+
+ALTER TABLE public.social_auth_nonce OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 148684)
+-- Name: social_auth_nonce_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE social_auth_nonce_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.social_auth_nonce_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2235 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: social_auth_nonce_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE social_auth_nonce_id_seq OWNED BY social_auth_nonce.id;
+
+
+--
+-- TOC entry 208 (class 1259 OID 148686)
+-- Name: social_auth_usersocialauth; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE social_auth_usersocialauth (
+    id integer NOT NULL,
+    provider character varying(32) NOT NULL,
+    uid character varying(255) NOT NULL,
+    extra_data text NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.social_auth_usersocialauth OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 148692)
+-- Name: social_auth_usersocialauth_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE social_auth_usersocialauth_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.social_auth_usersocialauth_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2236 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: social_auth_usersocialauth_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE social_auth_usersocialauth_id_seq OWNED BY social_auth_usersocialauth.id;
+
+
+--
+-- TOC entry 1947 (class 2604 OID 148694)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_group ALTER COLUMN id SET DEFAULT nextval('auth_group_id_seq'::regclass);
+
+
+--
+-- TOC entry 1948 (class 2604 OID 148695)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- TOC entry 1949 (class 2604 OID 148696)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_permission ALTER COLUMN id SET DEFAULT nextval('auth_permission_id_seq'::regclass);
+
+
+--
+-- TOC entry 1950 (class 2604 OID 148697)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user ALTER COLUMN id SET DEFAULT nextval('auth_user_id_seq'::regclass);
+
+
+--
+-- TOC entry 1951 (class 2604 OID 148698)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_groups ALTER COLUMN id SET DEFAULT nextval('auth_user_groups_id_seq'::regclass);
+
+
+--
+-- TOC entry 1952 (class 2604 OID 148699)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- TOC entry 1953 (class 2604 OID 148700)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY django_admin_log ALTER COLUMN id SET DEFAULT nextval('django_admin_log_id_seq'::regclass);
+
+
+--
+-- TOC entry 1955 (class 2604 OID 148701)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY django_content_type ALTER COLUMN id SET DEFAULT nextval('django_content_type_id_seq'::regclass);
+
+
+--
+-- TOC entry 1956 (class 2604 OID 148702)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY django_migrations ALTER COLUMN id SET DEFAULT nextval('django_migrations_id_seq'::regclass);
+
+
+--
+-- TOC entry 1957 (class 2604 OID 148703)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY django_site ALTER COLUMN id SET DEFAULT nextval('django_site_id_seq'::regclass);
+
+
+--
+-- TOC entry 1958 (class 2604 OID 148704)
+-- Name: id_categoria; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manager_categoria ALTER COLUMN id_categoria SET DEFAULT nextval('manager_categoria_id_categoria_seq'::regclass);
+
+
+--
+-- TOC entry 1959 (class 2604 OID 148705)
+-- Name: id_entrada; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manager_entrada ALTER COLUMN id_entrada SET DEFAULT nextval('manager_entrada_id_entrada_seq'::regclass);
+
+
+--
+-- TOC entry 1960 (class 2604 OID 148706)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manager_facebookstatus ALTER COLUMN id SET DEFAULT nextval('manager_facebookstatus_id_seq'::regclass);
+
+
+--
+-- TOC entry 1961 (class 2604 OID 148707)
+-- Name: id_noticia; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manager_noticia ALTER COLUMN id_noticia SET DEFAULT nextval('manager_noticia_id_noticia_seq'::regclass);
+
+
+--
+-- TOC entry 1962 (class 2604 OID 148708)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manager_userprofile ALTER COLUMN id SET DEFAULT nextval('manager_userprofile_id_seq'::regclass);
+
+
+--
+-- TOC entry 1963 (class 2604 OID 148709)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY social_auth_association ALTER COLUMN id SET DEFAULT nextval('social_auth_association_id_seq'::regclass);
+
+
+--
+-- TOC entry 1964 (class 2604 OID 148710)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY social_auth_code ALTER COLUMN id SET DEFAULT nextval('social_auth_code_id_seq'::regclass);
+
+
+--
+-- TOC entry 1965 (class 2604 OID 148711)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY social_auth_nonce ALTER COLUMN id SET DEFAULT nextval('social_auth_nonce_id_seq'::regclass);
+
+
+--
+-- TOC entry 1966 (class 2604 OID 148712)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY social_auth_usersocialauth ALTER COLUMN id SET DEFAULT nextval('social_auth_usersocialauth_id_seq'::regclass);
+
+
+--
+-- TOC entry 2170 (class 0 OID 148568)
+-- Dependencies: 170
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2237 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_group_id_seq', 1, false);
+
+
+--
+-- TOC entry 2172 (class 0 OID 148573)
+-- Dependencies: 172
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2238 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- TOC entry 2174 (class 0 OID 148578)
+-- Dependencies: 174
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can add permission	2	add_permission
+5	Can change permission	2	change_permission
+6	Can delete permission	2	delete_permission
+7	Can add group	3	add_group
+8	Can change group	3	change_group
+9	Can delete group	3	delete_group
+10	Can add user	4	add_user
+11	Can change user	4	change_user
+12	Can delete user	4	delete_user
+13	Can add content type	5	add_contenttype
+14	Can change content type	5	change_contenttype
+15	Can delete content type	5	delete_contenttype
+16	Can add session	6	add_session
+17	Can change session	6	change_session
+18	Can delete session	6	delete_session
+19	Can add user social auth	7	add_usersocialauth
+20	Can change user social auth	7	change_usersocialauth
+21	Can delete user social auth	7	delete_usersocialauth
+22	Can add nonce	8	add_nonce
+23	Can change nonce	8	change_nonce
+24	Can delete nonce	8	delete_nonce
+25	Can add association	9	add_association
+26	Can change association	9	change_association
+27	Can delete association	9	delete_association
+28	Can add code	10	add_code
+29	Can change code	10	change_code
+30	Can delete code	10	delete_code
+31	Can add Categoria	11	add_categoria
+32	Can change Categoria	11	change_categoria
+33	Can delete Categoria	11	delete_categoria
+34	Can add user	12	add_usuario
+35	Can change user	12	change_usuario
+36	Can delete user	12	delete_usuario
+37	Can add Entrada	13	add_entrada
+38	Can change Entrada	13	change_entrada
+39	Can delete Entrada	13	delete_entrada
+40	Can add user profile	14	add_userprofile
+41	Can change user profile	14	change_userprofile
+42	Can delete user profile	14	delete_userprofile
+43	Can add Noticia	15	add_noticia
+44	Can change Noticia	15	change_noticia
+45	Can delete Noticia	15	delete_noticia
+46	Can add site	16	add_site
+47	Can change site	16	change_site
+48	Can delete site	16	delete_site
+49	Can add facebook status	17	add_facebookstatus
+50	Can change facebook status	17	change_facebookstatus
+51	Can delete facebook status	17	delete_facebookstatus
+\.
+
+
+--
+-- TOC entry 2239 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_permission_id_seq', 51, true);
+
+
+--
+-- TOC entry 2176 (class 0 OID 148583)
+-- Dependencies: 176
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+28	!gfpXOlUjHe6Fbxs3rSTBvBS8rREkbglaWzjeTSR4	2015-11-03 17:44:35.939-05	f	HernanMaza	Hernan	Maza	josehmaza@gmail.com	f	t	2015-11-03 17:04:42.366-05
+27	!uqi4876hnNjurGi61HBJyyIbTV98eTCrXQj8gAAB	2015-11-03 17:48:07.274-05	f	DarwinGonzalez	Darwin	Gonzalez		f	t	2015-11-03 17:04:14.186-05
+2	pbkdf2_sha256$15000$dIPs4Xjf8YWU$fQ/BnzP6roi9Q2dXtN9Ki04R4ThDhxx4CWAm/qQLqtY=	2015-11-05 08:39:19.386-05	f	josehmaza2	Hernan	Maza	josehmazaa@gmail.com	f	t	2015-09-17 21:23:58.931-05
+29	!YpoSQDd5DVSwLnUHeKZ00qVBHi0bcS1Q4RWUxQ0j	2015-11-05 08:41:09.096-05	f	JoseMaza	Jose	Maza	josehmaza@live.com	f	t	2015-11-05 08:38:33.713-05
+30	pbkdf2_sha256$15000$SU5B4lRyHuiU$TF0k88kWqewqEIYyZcYq9ctrRUIZc3HqzCupOAwt9b8=	2015-11-05 09:22:37.105-05	f	josehmaza5	josehmaza5	jk	josehmaza5	f	t	2015-11-05 09:20:57.941-05
+32	pbkdf2_sha256$15000$RcMcHQxyUxXN$p6DCV1isNJioBMNWEsKf9UKPYK2jYxwK82tkmQPEpBE=	2015-11-05 10:02:43.099-05	f	josehmaza6	jk	kj	askas.com	f	t	2015-11-05 10:02:43.099-05
+33	pbkdf2_sha256$15000$T5qqYRu66lna$WOtQ4BC9TsofZvNXKJDBzvVru56TweyroHrHY4XUaaw=	2015-11-05 10:14:25.274-05	f	josehmaza7	hj	jh	hjhjh	f	t	2015-11-05 10:14:25.274-05
+\.
+
+
+--
+-- TOC entry 2177 (class 0 OID 148586)
+-- Dependencies: 177
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2240 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 1, false);
+
+
+--
+-- TOC entry 2241 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_user_id_seq', 33, true);
+
+
+--
+-- TOC entry 2180 (class 0 OID 148593)
+-- Dependencies: 180
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2242 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- TOC entry 2182 (class 0 OID 148598)
+-- Dependencies: 182
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2243 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('django_admin_log_id_seq', 1, false);
+
+
+--
+-- TOC entry 2184 (class 0 OID 148607)
+-- Dependencies: 184
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY django_content_type (id, name, app_label, model) FROM stdin;
+1	log entry	admin	logentry
+2	permission	auth	permission
+3	group	auth	group
+4	user	auth	user
+5	content type	contenttypes	contenttype
+6	session	sessions	session
+7	user social auth	default	usersocialauth
+8	nonce	default	nonce
+9	association	default	association
+10	code	default	code
+11	Categoria	manager	categoria
+12	user	manager	usuario
+13	Entrada	manager	entrada
+14	user profile	manager	userprofile
+15	Noticia	manager	noticia
+16	site	sites	site
+17	facebook status	manager	facebookstatus
+\.
+
+
+--
+-- TOC entry 2244 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('django_content_type_id_seq', 17, true);
+
+
+--
+-- TOC entry 2186 (class 0 OID 148612)
+-- Dependencies: 186
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2015-09-17 21:22:48.815-05
+2	auth	0001_initial	2015-09-17 21:22:49.681-05
+3	admin	0001_initial	2015-09-17 21:22:49.876-05
+4	default	0001_initial	2015-09-17 21:22:50.421-05
+5	default	0002_add_related_name	2015-09-17 21:22:50.511-05
+6	default	0003_alter_email_max_length	2015-09-17 21:22:50.566-05
+7	default	0004_auto_20150917_1202	2015-09-17 21:22:50.736-05
+8	manager	0001_initial	2015-09-17 21:22:51.531-05
+9	sessions	0001_initial	2015-09-17 21:22:51.936-05
+10	manager	0002_auto_20150918_1412	2015-09-18 14:12:48.683-05
+11	default	0004_auto_20150924_1752	2015-09-24 17:53:02.153-05
+12	manager	0003_auto_20150924_1752	2015-09-24 17:53:02.711-05
+13	manager	0004_auto_20150926_1032	2015-09-26 10:32:32.537-05
+14	sites	0001_initial	2015-09-26 10:34:49.054-05
+15	manager	0005_facebookstatus	2015-10-08 20:18:06.617-05
+16	manager	0006_auto_20151009_1053	2015-10-09 10:53:46.297-05
+17	manager	0007_usuario_linkperfil	2015-10-09 17:54:08.314-05
+18	manager	0008_auto_20151011_1552	2015-10-11 15:52:22.425-05
+19	manager	0009_auto_20151011_1613	2015-10-11 16:13:20.602-05
+20	manager	0010_auto_20151011_1828	2015-10-11 18:28:53.088-05
+21	manager	0011_noticia_tag	2015-10-13 22:13:41.074-05
+22	manager	0012_entrada_tag	2015-10-13 22:26:59.494-05
+23	manager	0013_categoria_tag	2015-10-14 21:56:13.263-05
+24	manager	0014_auto_20151031_1342	2015-10-31 13:43:01.448-05
+25	manager	0015_entrada_librourl	2015-11-02 22:59:00.153-05
+26	manager	0016_auto_20151102_2305	2015-11-02 23:05:12.794-05
+27	manager	0017_auto_20151103_1602	2015-11-03 16:02:52.957-05
+\.
+
+
+--
+-- TOC entry 2245 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('django_migrations_id_seq', 27, true);
+
+
+--
+-- TOC entry 2188 (class 0 OID 148620)
+-- Dependencies: 188
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY django_session (session_key, session_data, expire_date) FROM stdin;
+9tdpr54naw9c328g0kqwkeb01un1i1ux	NWNhZWE0NmE4YzhlOWNjNjU0YzgyN2E5MzE0ZThlNTAzNzYzNDY0MDp7ImZhY2Vib29rX3N0YXRlIjoiNFFuRmZvN0RFb1FtQTFYM1VnR3dJcDc0M2xlMlN0OTAiLCJzb2NpYWxfYXV0aF9sYXN0X2xvZ2luX2JhY2tlbmQiOiJmYWNlYm9vayIsIl9hdXRoX3VzZXJfaGFzaCI6ImExMzYzZjNjZjdkYzU0ZDllY2IyY2Y4NDc1MDNkYjBlYzZiYTRjZTkiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJzb2NpYWwuYmFja2VuZHMuZmFjZWJvb2suRmFjZWJvb2tPQXV0aDIiLCJfYXV0aF91c2VyX2lkIjo3fQ==	2015-10-25 14:22:48.047-05
+zmodij92xrnvym0em6h8r1c7fl7rc0h1	OTAwODhmMmRmNDk3MTQwZDMzMjRiN2Q3YWY1ZDViM2Y3ZGJiZjI5Nzp7ImZhY2Vib29rX3N0YXRlIjoid0tXZllrRUNuWkRPemJnNVJqM3BBZlpqMFdQa3ZuTFIiLCJzb2NpYWxfYXV0aF9sYXN0X2xvZ2luX2JhY2tlbmQiOiJmYWNlYm9vayIsIl9hdXRoX3VzZXJfaGFzaCI6IjQ2ZDEwMjQ0YzJiYjJhNzIwNzI5ZDgzOTM3ZGU0YTI4OWI3ZmQyYzMiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJzb2NpYWwuYmFja2VuZHMuZmFjZWJvb2suRmFjZWJvb2tPQXV0aDIiLCJfYXV0aF91c2VyX2lkIjoyMX0=	2015-10-22 23:08:15.782-05
+8gj08r5ncuya0iwx3h54dctog6fa93gy	ZDA1ZjA1ODQ5NzMxNjYxOTI3ZGZkYzc4Y2NmZDM5ZDI0NmNkN2IyNjp7ImZhY2Vib29rX3N0YXRlIjoiZ0VPdVMzdTRTUTNsaEhMUHJ0SDV6RWFkWEtRS0lhbncifQ==	2015-10-23 01:58:33.58-05
+1dhk8at3m79zirvl8yhnkrypf8m29bow	ZDU4N2MxMmY2ODljNWUxNzQ4Y2I4ZjZkNDhhNmNiODMwMzA5YTQxZTp7ImZhY2Vib29rX3N0YXRlIjoiUmRzcG9JQThmR0RPMkhFdjYzcEJTRElCejR3WnNuangiLCJzb2NpYWxfYXV0aF9sYXN0X2xvZ2luX2JhY2tlbmQiOiJmYWNlYm9vayIsIl9hdXRoX3VzZXJfaGFzaCI6ImExMzYzZjNjZjdkYzU0ZDllY2IyY2Y4NDc1MDNkYjBlYzZiYTRjZTkiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJzb2NpYWwuYmFja2VuZHMuZmFjZWJvb2suRmFjZWJvb2tPQXV0aDIiLCJfYXV0aF91c2VyX2lkIjo3fQ==	2015-10-28 23:57:35.334-05
+7wufnaonxsipk1e66ex23iz93k946vra	NWU4NWYyMzVlYjc1YzFjMmU3NjU2NWZhZDVhNThkM2QyZGQyOTEyMzp7ImZhY2Vib29rX3N0YXRlIjoiSHN0VFkyb3BTS1dKY29sUDZuZkNLSE93NzdtZHE4clQiLCJzb2NpYWxfYXV0aF9sYXN0X2xvZ2luX2JhY2tlbmQiOiJmYWNlYm9vayIsIl9hdXRoX3VzZXJfaGFzaCI6IjZjMWVmNWJhZjZlOWIyMTMxMWRkODZmZWNkYzdjNzcyNGU4NTE3NTgiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJzb2NpYWwuYmFja2VuZHMuZmFjZWJvb2suRmFjZWJvb2tPQXV0aDIiLCJfYXV0aF91c2VyX2lkIjoyMH0=	2015-10-29 22:47:42.262-05
+xv5rx7ncgfvkjcx6s7p09hqulujf1tem	MDAzNzAzNDE3MzVjZWM0MmY3MzI3ODY0MzVhOWU3NmQxNDk2MzUzMzp7Il9hdXRoX3VzZXJfaGFzaCI6ImUxZGU1YTI0MDlkYjU0ODU2OTA5MzllOGNjNGI3NjhmODllYTFkYTkiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOjN9	2015-11-04 22:02:24.715-05
+0kuaqoll3jgwec0rapnpje25nq3ysk39	NjYzMzFiMWVkYWJmNGI4MDNkZjhhZGI2NjRjMjgwODRlMTZhYjUzNDp7ImZhY2Vib29rX3N0YXRlIjoiMllQQWhoZk4wcWE0S2k3WWdyMk5tWFFzM3NBQkZIdDciLCJzb2NpYWxfYXV0aF9sYXN0X2xvZ2luX2JhY2tlbmQiOiJmYWNlYm9vayIsIl9hdXRoX3VzZXJfaGFzaCI6ImQ2NGU5ZjJmZmNhZmQxNmU5NmRiMjUzN2RlYmUyZmM4MmQ2ZjA5NWEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJzb2NpYWwuYmFja2VuZHMuZmFjZWJvb2suRmFjZWJvb2tPQXV0aDIiLCJfYXV0aF91c2VyX2lkIjoyOH0=	2015-11-17 17:44:35.942-05
+up4sseo20s179igbjlenh2shnniws932	MDk3MmJmZDRhZTIwMzkzMDBhMTkzZmI3Nzc1MTU1NDU3YjRhNWUyODp7ImZhY2Vib29rX3N0YXRlIjoiYzBmQ2g5Nm1aQlBDNWZkbTNiZU1sSkg4S3BtSUhPbDUiLCJzb2NpYWxfYXV0aF9sYXN0X2xvZ2luX2JhY2tlbmQiOiJmYWNlYm9vayIsIl9hdXRoX3VzZXJfaGFzaCI6IjhiZDZlY2RmNjYyMzdmOGUxNTFlNDgxMTM0ZDZiZWExMmNhYTI5MGQiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJzb2NpYWwuYmFja2VuZHMuZmFjZWJvb2suRmFjZWJvb2tPQXV0aDIiLCJfYXV0aF91c2VyX2lkIjoyN30=	2015-11-17 17:48:07.276-05
+jid866yhp15j7wvwvaegz9np23lngvvg	ZTRhNjdhYmNjYzA2NTVjYjI3N2FiOTBjYTk1MzY5MDUwZGJjMWE3Yjp7ImZhY2Vib29rX3N0YXRlIjoiZ1F5Q1JiR3hOb2tSdEFyTE9tOFBtdVZhY0huU1VSbHEiLCJzb2NpYWxfYXV0aF9sYXN0X2xvZ2luX2JhY2tlbmQiOiJmYWNlYm9vayIsIl9hdXRoX3VzZXJfaGFzaCI6IjAyNzY3YzQyMGVjODQwYjFiYjEyMTY3ZGFkNWQ3NjNiYzA1NTBiYzUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJzb2NpYWwuYmFja2VuZHMuZmFjZWJvb2suRmFjZWJvb2tPQXV0aDIiLCJfYXV0aF91c2VyX2lkIjoyOX0=	2015-11-19 08:41:09.099-05
+mh7qsjhwrig4dozt4gdia6wz2pvbf1u3	NzgyYTZmYmYyOTUzZTZiYzEwNGQxN2ZjMGY3ZDZhZjk5ODBhMDllZTp7Il9hdXRoX3VzZXJfaGFzaCI6ImM4OTY1MmE1NWQzYWVhNTE1MDM1NjgyNmU2MTNjZGYyNjM3YjczYzQiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOjMwfQ==	2015-11-19 09:22:37.107-05
+\.
+
+
+--
+-- TOC entry 2189 (class 0 OID 148626)
+-- Dependencies: 189
+-- Data for Name: django_site; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY django_site (id, domain, name) FROM stdin;
+1	localhost	localhost
+\.
+
+
+--
+-- TOC entry 2246 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: django_site_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('django_site_id_seq', 1, true);
+
+
+--
+-- TOC entry 2191 (class 0 OID 148631)
+-- Dependencies: 191
+-- Data for Name: manager_categoria; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY manager_categoria (id_categoria, nombre, tag) FROM stdin;
+7	los deportistas	BLU
+9	Biografias	BLU
+13	Defagult	BLU
+2	Cultura General	Cultura
+1	El lector	BLU
+\.
+
+
+--
+-- TOC entry 2247 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: manager_categoria_id_categoria_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('manager_categoria_id_categoria_seq', 13, true);
+
+
+--
+-- TOC entry 2193 (class 0 OID 148636)
+-- Dependencies: 193
+-- Data for Name: manager_entrada; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY manager_entrada (id_entrada, titulo, imagen_libro, resumen, fecha_publicacion, libro, autor_id, categoria_id, tag, librourl) FROM stdin;
+7	El libro dela selva 2 en la arquitectura4	uploads/ga.jpg	libro 4Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam accumsan laoreet pellentesque. Duis enim nunc, varius quis justo sed, feugiat tincidunt tellus. Nullam eu urna odio. Pellentesque id arcu id ipsum tincidunt placerat scelerisque ac metus. Curabitur congue pretium sem nec rutrum. Sed faucibus et mauris vel tristique. Sed molestie dapibus ante, quis tempor nisl pellentesque sed. Maecenas ullamcorper lobortis lorem ac ultrices. Donec a magna elit. Vestibulum tempus molestie commodo. Ut tristique magna non feugiat auctor. Sed enim velit, porta at ornare non, molestie ut turpis.	2015-09-28 14:27:10.864-05	urllibro	2	1	BLU	\N
+39	Libro de Ana Frank	uploads/ana_frank_ZYxpO2B.jpg	EL VIERNES DESPERTE ya a las seis. Era comprensible, pues fue el dÌa de mi cumpleaÒos. Pero no podÌa levantarme tan temprano y hube de apaciguar mi curiosidad hasta un cuarto para las siete. Entonces ya no soportÈ m·s y corrÌ hasta el comedor, donde nuestro pequeÒo gatito, Mohrchen, me saludÛ con efusivo cariÒo. DespuÈs de las siete fui al dormitorio de mis padres y, enseguida, con ellos al salÛn para encontrar y desenvolver mis regalos. A ti, mi diario, te vi en primer lugar, y sin duda fuiste mi mejor regalo. TambiÈn me obsequiaron un ramo de rosas, un cactus y unas ramas de rosas silvestres. ...	2015-10-07 14:52:18.193-05	uploads/El_Diario_de_Ana_frank_jxamQSd.pdf	2	1	BLU	\N
+29	Bradbury, Ray - Cronicas Marcianas	uploads/cronicas-marcianas-ray-bradbury.jpg	Un minuto antes era invierno \r\nen Ohio; las puertas y las ventanas estaban cerradas, la\r\nescarcha empañaba los vidrios, el hielo ador\r\nnaba los bordes de los techos, los niños\r\nesquiaban en las laderas; las mujeres, \r\nenvueltas en abrigos de piel, caminaban\r\ntorpemente por las calles heladas como grandes osos negros.	2015-10-07 13:02:58.706-05	uploads/Bradbury_Ray_-_Cronicas_Marcianas.pdf	2	1	BLU	\N
+31	STEVE JOBS	uploads/descarga.jpg	A  principios  del  verano  de  2004  recibí  una  llamada  telefónica  de  Steve  Jobs.  Mantenía  conmigo  una  relación  de  amistad \r\nintermitente,  con  estallid\r\nos  ocasionales  de  mayor  intensidad,  especialmente  cuando  iba  a  presentar  un  nuevo  producto  y \r\nquería que apareciera en la portada de Time o en la CNN, compañías en las que yo había trabajado. Sin embargo, ahora \r\nque ya no me encontraba en ninguno de esos dos\r\nmedios, llevaba un tiempo sin saber gran cosa de él. Hablamos un poco \r\nacerca  del  Instituto  Aspen,  al  que  yo  me  había  unido  recientemente,  y  lo  invité  a  dar  una  charla  en  nuestro  campus  de \r\nverano  en  Colorado.  Afirmó  que  le  encantaría  acudir,  pero  que  no  qu\r\nería  subir  al  escenario.  En  vez  de  eso,  quería  que \r\ndiéramos un paseo para charlar.	2015-10-11 21:52:01.43-05	uploads/stjo.pdf	2	1	BLU	\N
+34	El diario de Ana Frank	uploads/ana_frank.jpg	EL VIERNES DESPERTE ya a las seis. Era comprensible, pues\r\nfue el dÌa de mi cumpleaÒos. Pero no podÌa levantarme tan\r\ntemprano y hube de apaciguar mi curiosidad hasta un cuarto para\r\nlas siete. Entonces ya no soportÈ m·s y corrÌ hasta el comedor,\r\ndonde nuestro pequeÒo gatito, Mohrchen, me saludÛ con efusivo\r\ncariÒo. DespuÈs de las siete fui al dormitorio de mis padres y,\r\nenseguida, con ellos al salÛn para encontrar y desenvolver mis\r\nregalos. A ti, mi diario, te vi en primer lugar, y sin duda fuiste mi\r\nmejor regalo. TambiÈn me obsequiaron un ramo de rosas, un\r\ncactus y unas ramas de rosas silvestres.	2015-10-07 13:29:11.588-05	uploads/El_Diario_de_Ana_frank.pdf	2	1	Cultura	\N
+38	Viaje al centro de la Tierra	uploads/viaje_ala_tierra.jpg	Trata de la expedición de un profesor de mineralogía, su sobrino y un guía al interior del planeta tierra.\r\n\r\nUna de las mejores obras de Julio Verne y si te gustan las novelas de aventuras, seguro que te agradará.	2015-11-03 15:43:29.288-05	uploads/ViajeAlCentroDeLaTierra.pdf	2	2	BLU	\N
+37	El señor de las moscas	uploads/El-senor-de-las-moscas.jpg	El señor de las moscas cuenta la historia de un grupo de chicos británicos cuyo avión ha chocado en una isla desierta en el Océano Pacífico. (Parece que hay una guerra en el mundo, lo cual importará luego.) Sin adultos, los chicos tienen que cuidarse y organizarse. Los chicos tienen entre seis y doce años. Ralph, uno de los chicos mayores, se hace el "jefe" con la ayuda de una concha de caracol. (Los chicos deciden que quien tiene la concha tiene el poder de hablar en público. Esto ayuda a establecer el orden.)	2015-11-03 15:43:29.297-05	uploads/Golding_William_-_El_Senor_de_las_Moscas.pdf	2	2	Cultura	\N
+32	J.K. Rowling - 02 - Harry Potter y La Camara Secreta	uploads/PRINCESA_DE_MARTE.jpg	Creo que sería conveniente hacer algunos comentarios acerca de la interesante \r\npersonalidad del Capitán Cárter antes de dar a conocer la extraña historia que \r\nnarra este libro. \r\nEl primer recuerdo que tengo de él es el de la época que pasó en la casa de mi \r\npadre en Virginia, antes del comienzo de la Guerra Civil. En ese entonces Yo tenía \r\nalrededor de cinco años, pero aún recuerdo a aquel hombre alto, morocho, atlético \r\ny buen mozo al que llamaba Tío Jack. 	2015-11-03 15:43:29.301-05	uploads/Una_Princesa_de_Marte.pdf	2	2	BLU	\N
+51	GABRIEL GARCIA	uploads/cienañosdesoledad_NK1hM93.jpg	EL VIERNES DESPERTE ya a las seis. Era comprensible, pues fue el dÌa de mi cumpleaÒos. Pero no podÌa levantarme tan temprano y hube de apaciguar mi curiosidad hasta un cuarto para las siete. Entonces ya no soportÈ m·s y corrÌ hasta el comedor, donde nuestro pequeÒo gatito, Mohrchen, me saludÛ con efusivo cariÒo. DespuÈs de las siete fui al dormitorio de mis padres y, enseguida, con ellos al salÛn para encontrar y desenvolver mis regalos. A ti, mi diario, te vi en primer lugar, y sin duda fuiste mi mejor regalo. TambiÈn me obsequiaron un ramo de rosas, un cactus y unas ramas de rosas silvestres. ... ...	2015-11-03 15:42:32.139-05	uploads/garcia-marquez-gabriel-cien-anos-de-soledad1_KcKPvkB.pdf	2	1	Cultura	\N
+30	J.K. Rowling - 02 - Harry Potter y La Camara Secreta	uploads/CAMARA_SECRETA.jpg	Tras derrotar una vez más a lord Voldemort, su siniestro enemigo en \r\nHarry Potter y la piedra filosofal\r\n, Harry espera impaciente en casa de sus \r\ninsoportables tíos el inicio del segundo curso del Colegio Hogwarts de \r\nMagia y hechicería. Sin embargo, la espera dura poco, pues un elfo \r\naparece en su habitación y le advierte que una amenaza mortal se cierne \r\nsobre la escuela. Así pues, Harry no se lo piensa dos veces y, \r\nacompañado de Ron, su mejor amigo, se dirige a Hogwarts en un coche \r\nvolador. Pero ¿puede un aprendiz de mago defender la escuela de los \r\nmalvados que pretenden destruirla? Sin saber que alguien ha abierto la \r\nCámara de los Secretos, dejando escapar una serie de monstruos \r\npeligrosos, Harry y sus amigos Ron y Hermione tendrán que enfrentarse \r\ncon arañas gigantes, serpientes encantadas, fantasmas enfurecidos y, \r\nsobre todo, con la mismísima reencarnación de su más temible \r\nadversario. 	2015-10-11 21:52:01.465-05	uploads/J.K._Rowling_-_02_-_Harry_Potter_y_La_Camara_Secreta.pdf	2	1	Cultura	\N
+33	NEUROMANCER	uploads/NEUROMANCER.png	O céu por cima do porto tinha a cor de uma TV que saiu do ar. \r\n—\r\n Não é \r\nque eu queira \r\n—\r\n Case ouviu enquanto abria caminho pela multidão q\r\nue \r\nestava na porta do \r\nChat. \r\n—\r\n Mas é como se o meu corpo tivesse criado, por si \r\nmesmo, esta enorme dependência da droga.	2015-10-11 21:52:01.46-05	uploads/wgneuromancer.pdf	2	1	BLU	\N
+35	Rebelion en la granja	uploads/rebelion.jpg	Rebelión  en  la  granja,\r\nde  George  Orwell,  fue  editado  por\r\nprimera vez por Secker & Warburg en agosto de 1945, después\r\nde  haber  sido  rechazado  el  original  por  cuatro  editores  el  año\r\nanterior.  En  1971  fue  descubierto  el  manuscrito  de  un  prólogo\r\nescrito para este libro  y que hasta entonces había permanecido\r\ncompletamente  ignorado.  Dicho  prólogo  fue  adquirido  por  el\r\nArchivo Orwell de la Universidad de Londres y se publicó pos-\r\nteriormente. El profesor Bernard Crick, del Birkbeck College de\r\nLondres, prueba la autenticidad de dicho  prólogo  y explica las\r\nextrañas y difíciles circunstancias en que fue escrito. Publicamos\r\nel trabajo del profesor Crick y, a continuación, el prólogo inédi-\r\nto de Orwell cuyo título es «La libertad de prensa»	2015-10-12 21:52:01.46-05	uploads/rebelion_en_la_granja.pdf	2	1	BLU	\N
+50	GABRIEL GARCIA	uploads/cienañosdesoledad_C3rpwjp.jpg	EL VIERNES DESPERTE ya a las seis. Era comprensible, pues fue el dÌa de mi cumpleaÒos. Pero no podÌa levantarme tan temprano y hube de apaciguar mi curiosidad hasta un cuarto para las siete. Entonces ya no soportÈ m·s y corrÌ hasta el comedor, donde nuestro pequeÒo gatito, Mohrchen, me saludÛ con efusivo cariÒo. DespuÈs de las siete fui al dormitorio de mis padres y, enseguida, con ellos al salÛn para encontrar y desenvolver mis regalos. A ti, mi diario, te vi en primer lugar, y sin duda fuiste mi mejor regalo. TambiÈn me obsequiaron un ramo de rosas, un cactus y unas ramas de rosas silvestres. ... ...	2015-11-03 15:42:32.167-05	uploads/garcia-marquez-gabriel-cien-anos-de-soledad1_hHXqukD.pdf	2	1	BLU	\N
+36	EL HOBBIT 	uploads/hobbit.jpg	\nEL HOBBIT \r\nJ.R.R. TOLKIEN\r\nEsta es una historia de hace mucho tiempo. En esa época los lenguajes eran \r\nbastante distintos de los de hoy... Las runas eran letras que en un principio se \r\nescribían mediante cortes o incisiones en madera, piedra, o metal. En los días de \r\neste relato los Enanos las utilizaban con regularidad, especialmente en registros \r\nprivados o secretos. Si las runas del Mapa de Thror son comparadas con las \r\ntranscripciones en letras modernas, no será difícil reconstruir el alfabeto (adaptado \r\nal inglés actual), y será posible leer el título rúnico de esta página. Desde un \r\nmargen del mapa una mano apunta a la puerta secreta, y debajo está escrito: 	2015-11-03 16:59:40.938-05	uploads/TolkHobbit.Pdf	2	1	BLU	\N
+28	Cien años de soledad	uploads/cienañosdesoledad.jpg	Publicada en 1967, Cien años de soledad relata el origen, la evolución y la ruina de Macondo, una aldea imaginaria que había hecho su aparición en las tres novelas cortas que su autor había publicado con anterioridad. Estructurada como una saga familiar, la historia de la estirpe de los Buendía se extiende por más de cien años, y cuenta con seis generaciones para hacerlo.\r\n\r\nLa crónica de los Buendía, que acumula una gran cantidad de episodios fantásticos, divertidos y violentos, y la de Macondo, desde su fundación hasta su fin, representan el ciclo completo de una cultura y un mundo. El clima de violencia en el que se desarrollan sus personajes es el que marca la soledad que los caracteriza, provocada más por las condiciones de vida que por las angustias existenciales del individuo.\r\n\r\nEl realismo mágico (también llamado lo real maravilloso) hace posible que la objetividad de la vida material se vea matizada por la subjetividad de la fantasía. Lo insólito (situaciones parecidas a los cuentos de hadas, levitaciones, premoniciones, la extrasensorialidad presente) da lugar a una atmósfera mágica que atenúa la miseria social y humana, de forma que lo mágico subraya la dureza y desajuste de la realidad, la violencia que domina la vida cotidiana.	2015-09-28 01:35:31.794-05	uploads/garcia-marquez-gabriel-cien-anos-de-soledad1.pdf	2	2	Cultura	\N
+\.
+
+
+--
+-- TOC entry 2248 (class 0 OID 0)
+-- Dependencies: 194
+-- Name: manager_entrada_id_entrada_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('manager_entrada_id_entrada_seq', 69, true);
+
+
+--
+-- TOC entry 2195 (class 0 OID 148644)
+-- Dependencies: 195
+-- Data for Name: manager_facebookstatus; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY manager_facebookstatus (id, status, publish_timestamp, message, link, author_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2249 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: manager_facebookstatus_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('manager_facebookstatus_id_seq', 2, true);
+
+
+--
+-- TOC entry 2197 (class 0 OID 148652)
+-- Dependencies: 197
+-- Data for Name: manager_noticia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY manager_noticia (id_noticia, titulo, imagen_noticia, contenido, fecha_publicacion, autor_id, tag) FROM stdin;
+32	Sistema de Reingenieria	uploads/noticia1_jiupCjB.png	--ja	2015-10-11 22:10:30.34-05	2	BLU
+33	Proceso de Matricula	uploads/noticia2_u2YRkpy.jpg	---	2015-10-11 22:19:11.419-05	2	BLU
+34	COMUNICADO	uploads/noticia3.png	---	2015-10-11 22:19:32.89-05	2	BLU
+35	Congreso Internacional	uploads/noticia4.png.jpg	------	2015-10-12 22:19:55.287-05	2	Cultura
+36	Comunicado	uploads/noticia5.png	---	2015-10-11 22:20:10.829-05	2	BLU
+37	Noticia 6	uploads/noticia6.png.jpg	--------	2015-10-11 23:57:15.124-05	2	BLU
+39	noticiaaa	uploads/noticia2_YVqfisx.jpg	esta es una nueva noticia	2015-10-31 13:41:38.217-05	2	BLU
+\.
+
+
+--
+-- TOC entry 2250 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: manager_noticia_id_noticia_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('manager_noticia_id_noticia_seq', 40, true);
+
+
+--
+-- TOC entry 2199 (class 0 OID 148660)
+-- Dependencies: 199
+-- Data for Name: manager_userprofile; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY manager_userprofile (id, gender, city, dob, locale, user_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2251 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: manager_userprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('manager_userprofile_id_seq', 1, false);
+
+
+--
+-- TOC entry 2201 (class 0 OID 148665)
+-- Dependencies: 201
+-- Data for Name: manager_usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY manager_usuario (user_ptr_id, rol, imagenperfil, linkperfil) FROM stdin;
+2	Admin	\N	\N
+27	User	 imageperfil_users/darwingonzalez-social.jpg	\N
+28	Admin	 imageperfil_users/hernanmaza-social.jpg	\N
+29	Admin	 imageperfil_users/josemaza-social.jpg	\N
+30	User		\N
+32	User		\N
+33	User		\N
+\.
+
+
+--
+-- TOC entry 2202 (class 0 OID 148668)
+-- Dependencies: 202
+-- Data for Name: social_auth_association; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY social_auth_association (id, server_url, handle, secret, issued, lifetime, assoc_type) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2252 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: social_auth_association_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('social_auth_association_id_seq', 1, false);
+
+
+--
+-- TOC entry 2204 (class 0 OID 148676)
+-- Dependencies: 204
+-- Data for Name: social_auth_code; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY social_auth_code (id, email, code, verified) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2253 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: social_auth_code_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('social_auth_code_id_seq', 1, false);
+
+
+--
+-- TOC entry 2206 (class 0 OID 148681)
+-- Dependencies: 206
+-- Data for Name: social_auth_nonce; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY social_auth_nonce (id, server_url, "timestamp", salt) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2254 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: social_auth_nonce_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('social_auth_nonce_id_seq', 1, false);
+
+
+--
+-- TOC entry 2208 (class 0 OID 148686)
+-- Dependencies: 208
+-- Data for Name: social_auth_usersocialauth; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY social_auth_usersocialauth (id, provider, uid, extra_data, user_id) FROM stdin;
+17	facebook	809990912442985	{"access_token": "CAAJ1YL4mF38BAGhrlWWkZAE4CloPzUhZBiKyBSe82trNFUXpvfNhVNfarqmkuj5Loyc1HksHZCEZBPrAG9OGxiL7u0u8JdeFao73sPre5Q32pwe8KhdpSJkmkimy3eZBOGZC1CT58zcsl0EZCmwZCf1YKtTxZAoZABwtxe5KnlSPX1ZCdbpUvu63Trjsj1oRGTJsOAZD", "expires": null, "id": "809990912442985"}	27
+18	facebook	887798487935013	{"access_token": "CAAJ1YL4mF38BALi5lecVk6jydrcoFaL3KXp7O3ikVrka5ONWij4Og6bKLUZAC5XJiwzAA9UAt9Azrx5RI5dKZBD1d3jKu9v6JeyrFABlZA6s6jJZCMNRH37CrAy0MZChBeBjwV91J1M3hTrNWXC3IdIoY7FKxUFPc2Yp5GYe4fOmFymobSZBCmFUs4XfEZAEWEIXUvrzXQ2UgZDZD", "expires": null, "id": "887798487935013"}	28
+19	facebook	444707975715577	{"access_token": "CAAJ1YL4mF38BAFZAlWicVjXvG5aLbL1Kz4RK7ZCFetjzdugkHmptLs3pjyoW7ZAxF7T9s0NxsB1Q5s7Aquq6Dct60sBn0mWeo8oZAHdKrVg6XFr2ZBUFdXtzkmFRyUZBcCw9VZAMZCyYyZC34kb422LgwfH1IMxZBMEfRXbV30qWvRM8cQZC5ICzZAMUCFLuhZAGYVwoZD", "expires": null, "id": "444707975715577"}	29
+\.
+
+
+--
+-- TOC entry 2255 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: social_auth_usersocialauth_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('social_auth_usersocialauth_id_seq', 19, true);
+
+
+--
+-- TOC entry 1968 (class 2606 OID 148714)
+-- Name: auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- TOC entry 1974 (class 2606 OID 148716)
+-- Name: auth_group_permissions_group_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_key UNIQUE (group_id, permission_id);
+
+
+--
+-- TOC entry 1976 (class 2606 OID 148718)
+-- Name: auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1970 (class 2606 OID 148720)
+-- Name: auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1979 (class 2606 OID 148722)
+-- Name: auth_permission_content_type_id_codename_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_key UNIQUE (content_type_id, codename);
+
+
+--
+-- TOC entry 1981 (class 2606 OID 148724)
+-- Name: auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1989 (class 2606 OID 148726)
+-- Name: auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1991 (class 2606 OID 148728)
+-- Name: auth_user_groups_user_id_group_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_key UNIQUE (user_id, group_id);
+
+
+--
+-- TOC entry 1983 (class 2606 OID 148730)
+-- Name: auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1995 (class 2606 OID 148732)
+-- Name: auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1997 (class 2606 OID 148734)
+-- Name: auth_user_user_permissions_user_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_key UNIQUE (user_id, permission_id);
+
+
+--
+-- TOC entry 1985 (class 2606 OID 148736)
+-- Name: auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- TOC entry 2001 (class 2606 OID 148738)
+-- Name: django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2003 (class 2606 OID 148740)
+-- Name: django_content_type_app_label_3ec8c61c_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_app_label_3ec8c61c_uniq UNIQUE (app_label, model);
+
+
+--
+-- TOC entry 2005 (class 2606 OID 148742)
+-- Name: django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2007 (class 2606 OID 148744)
+-- Name: django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2010 (class 2606 OID 148746)
+-- Name: django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- TOC entry 2012 (class 2606 OID 148748)
+-- Name: django_site_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY django_site
+    ADD CONSTRAINT django_site_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2014 (class 2606 OID 148750)
+-- Name: manager_categoria_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY manager_categoria
+    ADD CONSTRAINT manager_categoria_pkey PRIMARY KEY (id_categoria);
+
+
+--
+-- TOC entry 2018 (class 2606 OID 148752)
+-- Name: manager_entrada_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY manager_entrada
+    ADD CONSTRAINT manager_entrada_pkey PRIMARY KEY (id_entrada);
+
+
+--
+-- TOC entry 2021 (class 2606 OID 148754)
+-- Name: manager_facebookstatus_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY manager_facebookstatus
+    ADD CONSTRAINT manager_facebookstatus_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2024 (class 2606 OID 148756)
+-- Name: manager_noticia_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY manager_noticia
+    ADD CONSTRAINT manager_noticia_pkey PRIMARY KEY (id_noticia);
+
+
+--
+-- TOC entry 2026 (class 2606 OID 148758)
+-- Name: manager_userprofile_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY manager_userprofile
+    ADD CONSTRAINT manager_userprofile_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2028 (class 2606 OID 148760)
+-- Name: manager_userprofile_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY manager_userprofile
+    ADD CONSTRAINT manager_userprofile_user_id_key UNIQUE (user_id);
+
+
+--
+-- TOC entry 2030 (class 2606 OID 148762)
+-- Name: manager_usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY manager_usuario
+    ADD CONSTRAINT manager_usuario_pkey PRIMARY KEY (user_ptr_id);
+
+
+--
+-- TOC entry 2032 (class 2606 OID 148764)
+-- Name: social_auth_association_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY social_auth_association
+    ADD CONSTRAINT social_auth_association_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2035 (class 2606 OID 148766)
+-- Name: social_auth_code_email_2fa81c4a_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY social_auth_code
+    ADD CONSTRAINT social_auth_code_email_2fa81c4a_uniq UNIQUE (email, code);
+
+
+--
+-- TOC entry 2037 (class 2606 OID 148768)
+-- Name: social_auth_code_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY social_auth_code
+    ADD CONSTRAINT social_auth_code_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2039 (class 2606 OID 148770)
+-- Name: social_auth_nonce_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY social_auth_nonce
+    ADD CONSTRAINT social_auth_nonce_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2041 (class 2606 OID 148772)
+-- Name: social_auth_nonce_server_url_687b9c4c_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY social_auth_nonce
+    ADD CONSTRAINT social_auth_nonce_server_url_687b9c4c_uniq UNIQUE (server_url, "timestamp", salt);
+
+
+--
+-- TOC entry 2044 (class 2606 OID 148774)
+-- Name: social_auth_usersocialauth_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY social_auth_usersocialauth
+    ADD CONSTRAINT social_auth_usersocialauth_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2046 (class 2606 OID 148776)
+-- Name: social_auth_usersocialauth_provider_1d3b5e05_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY social_auth_usersocialauth
+    ADD CONSTRAINT social_auth_usersocialauth_provider_1d3b5e05_uniq UNIQUE (provider, uid);
+
+
+--
+-- TOC entry 1971 (class 1259 OID 148777)
+-- Name: auth_group_permissions_0e939a4f; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_group_permissions_0e939a4f ON auth_group_permissions USING btree (group_id);
+
+
+--
+-- TOC entry 1972 (class 1259 OID 148778)
+-- Name: auth_group_permissions_8373b171; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_group_permissions_8373b171 ON auth_group_permissions USING btree (permission_id);
+
+
+--
+-- TOC entry 1977 (class 1259 OID 148779)
+-- Name: auth_permission_417f1b1c; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_permission_417f1b1c ON auth_permission USING btree (content_type_id);
+
+
+--
+-- TOC entry 1986 (class 1259 OID 148780)
+-- Name: auth_user_groups_0e939a4f; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_user_groups_0e939a4f ON auth_user_groups USING btree (group_id);
+
+
+--
+-- TOC entry 1987 (class 1259 OID 148781)
+-- Name: auth_user_groups_e8701ad4; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_user_groups_e8701ad4 ON auth_user_groups USING btree (user_id);
+
+
+--
+-- TOC entry 1992 (class 1259 OID 148782)
+-- Name: auth_user_user_permissions_8373b171; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_user_user_permissions_8373b171 ON auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- TOC entry 1993 (class 1259 OID 148783)
+-- Name: auth_user_user_permissions_e8701ad4; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auth_user_user_permissions_e8701ad4 ON auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- TOC entry 1998 (class 1259 OID 148784)
+-- Name: django_admin_log_417f1b1c; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX django_admin_log_417f1b1c ON django_admin_log USING btree (content_type_id);
+
+
+--
+-- TOC entry 1999 (class 1259 OID 148785)
+-- Name: django_admin_log_e8701ad4; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX django_admin_log_e8701ad4 ON django_admin_log USING btree (user_id);
+
+
+--
+-- TOC entry 2008 (class 1259 OID 148786)
+-- Name: django_session_de54fa62; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX django_session_de54fa62 ON django_session USING btree (expire_date);
+
+
+--
+-- TOC entry 2015 (class 1259 OID 148787)
+-- Name: manager_entrada_52be3978; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX manager_entrada_52be3978 ON manager_entrada USING btree (autor_id);
+
+
+--
+-- TOC entry 2016 (class 1259 OID 148788)
+-- Name: manager_entrada_daf3833b; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX manager_entrada_daf3833b ON manager_entrada USING btree (categoria_id);
+
+
+--
+-- TOC entry 2019 (class 1259 OID 148789)
+-- Name: manager_facebookstatus_4f331e2f; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX manager_facebookstatus_4f331e2f ON manager_facebookstatus USING btree (author_id);
+
+
+--
+-- TOC entry 2022 (class 1259 OID 148790)
+-- Name: manager_noticia_52be3978; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX manager_noticia_52be3978 ON manager_noticia USING btree (autor_id);
+
+
+--
+-- TOC entry 2033 (class 1259 OID 148791)
+-- Name: social_auth_code_c1336794; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX social_auth_code_c1336794 ON social_auth_code USING btree (code);
+
+
+--
+-- TOC entry 2042 (class 1259 OID 148792)
+-- Name: social_auth_usersocialauth_e8701ad4; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX social_auth_usersocialauth_e8701ad4 ON social_auth_usersocialauth USING btree (user_id);
+
+
+--
+-- TOC entry 2047 (class 2606 OID 148793)
+-- Name: auth_group_permiss_permission_id_23962d04_fk_auth_permission_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permiss_permission_id_23962d04_fk_auth_permission_id FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2048 (class 2606 OID 148798)
+-- Name: auth_group_permissions_group_id_58c48ba9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_58c48ba9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2049 (class 2606 OID 148803)
+-- Name: auth_permiss_content_type_id_51277a81_fk_django_content_type_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permiss_content_type_id_51277a81_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2050 (class 2606 OID 148808)
+-- Name: auth_user_groups_group_id_30a071c9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_30a071c9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2051 (class 2606 OID 148813)
+-- Name: auth_user_groups_user_id_24702650_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_24702650_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2052 (class 2606 OID 148818)
+-- Name: auth_user_user_per_permission_id_3d7071f0_fk_auth_permission_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_per_permission_id_3d7071f0_fk_auth_permission_id FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2053 (class 2606 OID 148823)
+-- Name: auth_user_user_permissions_user_id_7cd7acb6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_7cd7acb6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2054 (class 2606 OID 148828)
+-- Name: django_admin_content_type_id_5151027a_fk_django_content_type_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_content_type_id_5151027a_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2055 (class 2606 OID 148833)
+-- Name: django_admin_log_user_id_1c5f563_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_1c5f563_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2056 (class 2606 OID 148838)
+-- Name: manager_categoria_id_3372facc_fk_manager_categoria_id_categoria; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manager_entrada
+    ADD CONSTRAINT manager_categoria_id_3372facc_fk_manager_categoria_id_categoria FOREIGN KEY (categoria_id) REFERENCES manager_categoria(id_categoria) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2057 (class 2606 OID 148843)
+-- Name: manager_entrada_autor_id_55771fa4_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manager_entrada
+    ADD CONSTRAINT manager_entrada_autor_id_55771fa4_fk_auth_user_id FOREIGN KEY (autor_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2058 (class 2606 OID 148848)
+-- Name: manager_facebookstatus_author_id_62888eb7_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manager_facebookstatus
+    ADD CONSTRAINT manager_facebookstatus_author_id_62888eb7_fk_auth_user_id FOREIGN KEY (author_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2059 (class 2606 OID 148853)
+-- Name: manager_notici_autor_id_685ac624_fk_manager_usuario_user_ptr_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manager_noticia
+    ADD CONSTRAINT manager_notici_autor_id_685ac624_fk_manager_usuario_user_ptr_id FOREIGN KEY (autor_id) REFERENCES manager_usuario(user_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2060 (class 2606 OID 148858)
+-- Name: manager_userprofile_user_id_d5e8ff0_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manager_userprofile
+    ADD CONSTRAINT manager_userprofile_user_id_d5e8ff0_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2061 (class 2606 OID 148863)
+-- Name: manager_usuario_user_ptr_id_474584a1_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manager_usuario
+    ADD CONSTRAINT manager_usuario_user_ptr_id_474584a1_fk_auth_user_id FOREIGN KEY (user_ptr_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2062 (class 2606 OID 148868)
+-- Name: social_auth_usersocialauth_user_id_77fafd4e_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY social_auth_usersocialauth
+    ADD CONSTRAINT social_auth_usersocialauth_user_id_77fafd4e_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2216 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2015-11-11 18:25:24
+
+--
+-- PostgreSQL database dump complete
+--
+
