@@ -67,7 +67,7 @@ class Client(Thread):
 def main():
     enchufe = socket()
     # Escuchar peticiones en el puerto 6030.
-    enchufe.bind(("localhost", 6030))
+    enchufe.bind(("45.55.156.19", 8000))
     enchufe.listen(6)
 
     while True:

@@ -24,7 +24,7 @@ class Response(Thread):
 def main():
     global estado
     enchufe = socket()
-    enchufe.connect(("localhost", 6030))
+    enchufe.connect(("45.55.156.19", 8000))
     nombre = input(":::> Escriba su nombre de usuario: ")
     enchufe.send(("!!! \"{0}\" se ha conectado".format(nombre)).encode("utf-8"))
     listen = Response(enchufe)
