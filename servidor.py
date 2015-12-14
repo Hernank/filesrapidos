@@ -1,3 +1,6 @@
+#!/opt/rh/python33/root/usr/bin/python
+
+
 # -*- coding: utf-8 -*-
 from socket import socket, error
 from threading import Thread
