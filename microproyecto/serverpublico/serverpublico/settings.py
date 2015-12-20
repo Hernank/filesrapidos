@@ -21,11 +21,13 @@ BASE_DIR = Path(__file__).ancestor(2)
 SECRET_KEY = '*mj!f&!9^gbhmd$p*&3wd%n%&15c78kzoe14)_gg=#!^x-t#!!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+DEBUG404 = False
+TEMPLATE_DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1','104.236.90.196']
 
 
 # Application definition
@@ -67,16 +69,15 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-Es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Lima'
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
-
 
 
 
