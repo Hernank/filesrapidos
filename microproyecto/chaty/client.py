@@ -18,13 +18,13 @@ def enviarmensaje(sock,mensaje):
 
 def enviarmensajearduino(mensaje):
 	web=""
-	#import pdb; pdb.set_trace()
+	import pdb; pdb.set_trace()
 	if "getdata" in mensaje:
-		web="http://192.168.1.20/getdata/as"
+		web="http://192.168.0.20/getdata/as"
 	if "setdata" in mensaje:
 		variableset1=mensaje.split(',')[-2]
 		variableset2=mensaje.split(',')[-1]
-		web="http://192.168.1.20/setdata/"+variableset1+"-"+variableset2
+		web="http://192.168.0.20/setdata/"+variableset1+"-"+variableset2
 	userAgent = 'NuestroNavegador'
 	headers = { 'User-Agent' : userAgent }
 	req = urllib2.Request(web , None, headers)
@@ -46,7 +46,7 @@ while True:
 		received = sock.recv(1024)
 		
 		print received
-		##import pdb; pdb.set_trace()
+		#import pdb; pdb.set_trace()
 		isgetdata="getdata" in received 
 		issetdata="setdata" in received
 

@@ -34,6 +34,7 @@ def setsocket(request,variable):
 	return HttpResponse("jajaj "+received)
 
 def dashboard(request):
+
 	template='home/index.html'
 	valores,sensores=getvalores()
 
@@ -80,9 +81,9 @@ def getvalores():
 	data=[]
 	midata="hostpublic,getdata,"
 		# Connect to server and send data
-	import pdb; pdb.set_trace()
-	valores={'Alarma':False,'Ventilador 1':False,'Ventilador 2':False,'Radio 1':False,'Lampara':False,'Foco':False,
-		'Arbol':False,'Radio 2':False,'Servos':False,}
+	#import pdb; pdb.set_trace()
+	valores={'Alarma':False,'Ventilador 1':False,'Ventilador 2':False,'Radio 1':False,'Foco':False,
+		'Arbol':False,'Servos':False,}
 	received=''
 	datosrecibidos=""
 	sock=""
@@ -116,7 +117,7 @@ def getvalores():
 	valores['Radio 1']=miboleano[datosrecibidos[3]]
 	valores['Foco']=miboleano[datosrecibidos[4]]
 	valores['Arbol']=miboleano[datosrecibidos[5]]
-	Valores['Servos']=miboleano[datosrecibidos[6]]
+	valores['Servos']=miboleano[datosrecibidos[6]]
 	
 	valortemperatura=datosrecibidos.split('-')[-2]
 	valorsensor=datosrecibidos.split('-')[-1]
