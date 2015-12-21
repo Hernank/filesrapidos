@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     miurl('setvalor/'),
     miurl('getvalores/'),
     url(r'^dashboard/$', 'apps.home.views.dashboard',name='index'),
+    url(r'^$', 'apps.home.views.inicio',name='inicio'),
     
     
 )

@@ -27,12 +27,19 @@ class ChatSession(async_chat):
 		self.nombre=data.split(',')[0]
 		print "El valor es === "+data
 		if "getdata" in data :
+			print "x getdata"
 			self.found_terminator_except_i()
 		if "setdata" in data :
+			print "x setdata"
+
 			self.found_terminator_except_i()
 		if "success" in data :
+			print "x success"
+
 			self.found_terminator_except_i()
 		if "error" in data :
+			print "x error"
+
 			self.found_terminator_except_i()
 
 

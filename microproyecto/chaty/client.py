@@ -18,7 +18,7 @@ def enviarmensaje(sock,mensaje):
 
 def enviarmensajearduino(mensaje):
 	web=""
-	import pdb; pdb.set_trace()
+	#import pdb; pdb.set_trace()
 	if "getdata" in mensaje:
 		web="http://192.168.0.20/getdata/as"
 	if "setdata" in mensaje:
@@ -43,10 +43,11 @@ while True:
 		
 		# Receive data from the server and shut down
 		print "recibir mensaje:"
+
 		received = sock.recv(1024)
 		
 		print received
-		#import pdb; pdb.set_trace()
+		##import pdb; pdb.set_trace()
 		isgetdata="getdata" in received 
 		issetdata="setdata" in received
 
@@ -65,19 +66,6 @@ while True:
 		if issetdata:
 
 			sock.close
-
-			#valores['Alarma']=miboleano[datosrecibidos[0]]
-			#valores['Ventilador 1']=miboleano[datosrecibidos[1]]
-			#valores['Ventilador 2']=miboleano[datosrecibidos[2]]
-			#valores['Radio 1']=miboleano[datosrecibidos[3]]
-			#valores['Lampara']=miboleano[datosrecibidos[4]]
-			#valores['Foco']=miboleano[datosrecibidos[5]]
-			#valores['Arbol']=miboleano[datosrecibidos[6]]
-			#valores['Radio 2']=miboleano[datosrecibidos[7]]
-			#valores['Servos']=miboleano[datosrecibidos[8]]
-
-
-			arduinoserver=enviarmensajearduino(received)
 
 			sucess=True 
 			if sucess:
